@@ -1,5 +1,6 @@
 # plain
 _network markdown files into html with plaintext files_
+_this fork modified by somnius_
 
 ![plain in use over at https://cblgh.org](https://user-images.githubusercontent.com/3862362/127218176-379ff056-5e11-45a1-abcc-f43c7c47fb64.png)
 
