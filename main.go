@@ -14,10 +14,6 @@ import (
 	"errors"
 	"flag"
 	"fmt"
-	"github.com/cblgh/plain/og"
-	"github.com/cblgh/plain/rss"
-	"github.com/cblgh/plain/util"
-	"github.com/gomarkdown/markdown"
 	"io"
 	"io/fs"
 	"log"
@@ -27,6 +23,10 @@ import (
 	"sort"
 	"strings"
 	"time"
+
+	"github.com/cblgh/plain/rss"
+	"github.com/cblgh/plain/util"
+	"github.com/gomarkdown/markdown"
 )
 
 var verbose = true
@@ -282,22 +282,6 @@ func htmlPreamble(pf PageFragment) string {
 			htmlMeta += fmt.Sprintf(`<meta name="description" content="%s">%s`, pf.brief, "\n")
 		}
 
-		// generate opengraph metadata and image
-		if pf.title != "" {
-			_, articleName := extractFilenames(pf.location)
-			// if rewrittenDest != "" {
-			//   articleName = rewrittenDest
-			// }
-			imageName := fmt.Sprintf("%s.png", strings.ReplaceAll(strings.ToLower(articleName), " ", "-"))
-			imagePath := filepath.Join(OUTPATH, "og", imageName)
-			canonicalPath := fmt.Sprintf("%s/og/%s", canonicalUrl, imageName)
-			err = os.MkdirAll(filepath.Dir(imagePath), 0777)
-			util.Check(err)
-
-			settings := og.GetDefaultSettings()
-			htmlMeta += og.GenerateMetadata(pf.title, pf.brief, canonicalPath, settings)
-			og.GenerateImage(pf.title, pf.brief, imagePath, settings)
-		}
 		if htmlMeta != "" {
 			header = strings.Replace(header, match[1], htmlMeta, -1)
 		}
